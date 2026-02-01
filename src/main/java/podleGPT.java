@@ -2,9 +2,7 @@ import java.util.Scanner;
 
 public class podleGPT {
 
-        public static void podlesWill(String input){        // simply prints Podles will:
-            System.out.println("Podles will " + input + ":");
-        }
+
 
         public static void main(String[] args) throws InterruptedException {
 
@@ -13,13 +11,23 @@ public class podleGPT {
             System.out.println("What SHALL Podles do for you?! ( •◡-)-♡");
 
             new TaskList();
-
+            Scanner in = new Scanner(System.in);
             while(true) {
-                String input;
-                Scanner in = new Scanner(System.in);
-                input = in.nextLine();
+                String input = in.nextLine();;
 
-                if (input.equalsIgnoreCase("bye")) { // termination sequence
+                String[] inputParts = input.trim().split(" ",2);
+                String commandWord = inputParts[0].toUpperCase();
+                String arguments = (inputParts.length > 1) ? inputParts[1] : "";
+
+                Command cmd = Command.UNKNOWN;
+                for(Command c : Command.values()){
+                    if(commandWord.equalsIgnoreCase(c.name())) {
+                        cmd = c;
+                        break;
+                    }
+                }
+                switch(cmd) {
+                case BYE:
                     System.out.println("Y dont u want to play with podles .·°՞(っ-ᯅ-ς)՞°·. SADGE");
                     System.out.println("\n" + "████ 22%");
                     Thread.sleep(800);
@@ -33,27 +41,43 @@ public class podleGPT {
                     Thread.sleep(3333);
                     System.out.println("podles was terminated...");
                     System.exit(0);
-                }
-
-                else if (input.equalsIgnoreCase("list")) {
-                        podlesWill(input);
-                        TaskList.listTask();
-                }
-                else if (input.contains("mark")) {
-                    // add check for empty, and prompt if empty
+                    break;
+                case BYEBYE:
+                    System.out.println("deadge");
+                    System.exit(0);
+                case MARK:
                     String withoutCommand = input.replaceFirst("^[a-zA-Z]+\\s*", "");                           //strip "mark"
                     String tempString = withoutCommand.replaceAll("[a-zA-Z].*", ""); // remove rtandom text towards the end
                     String[] numberString = tempString.trim().split("[,\\s]+"); // split into
-                    if (input.contains("unmark")){
-                        TaskList.markList(numberString,false);
-                    }
-                    else {
+                    if (input.contains("unmark")) {
+                        TaskList.markList(numberString, false);
+                    } else {
                         TaskList.markList(numberString, true);
                     }
-                }
+                    break;
 
-                else{
-                        TaskList.addTask(input);
+                case LIST:
+                    TaskList.listTask();
+                    break;
+
+                case TODO:
+                    TaskList.addTask(new ToDo(arguments));
+                    break;
+
+                case DEADLINE:
+                    String[] deadlineString = arguments.trim().split("/", 2); // split into
+                    TaskList.addTask(new Deadlines(deadlineString));
+                    break;
+
+                case EVENT:
+                    String[] eventString = arguments.trim().split("/", 3); // split into
+                    TaskList.addTask(new Events(eventString));
+                    break;
+
+                case UNKNOWN:
+                default:
+                    TaskList.addTask(new Tasks(input, Category.TASK));
+                    break;
                 }
             }
         }

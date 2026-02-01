@@ -2,18 +2,29 @@ public class Tasks {
 
     private String taskName;
     private boolean isDone;
+    private Category category;
 
-    public Tasks(String s){
+    public Tasks(String s, Category category){
         this.taskName = s;
         this.isDone = false;
+        this.category = category;
+        podlesWill(category.name());
     }
 
     public boolean isDone(){
         return this.isDone;
     }
 
-    public String getTaskName(){
-        return taskName;
+    public String toString() {
+        if(isDone){
+        return String.format("[%s][X] " + this.taskName, category.name().charAt(0));
+        }
+        else {
+        return String.format("[%s][ ] " + this.taskName, category.name().charAt(0));
+        }
+    }
+    public static void podlesWill(String input){        // simply prints Podles will:
+        System.out.println("Podles will add " + input);
     }
 
     public void markDone(){
@@ -23,5 +34,15 @@ public class Tasks {
     public void markNotDone(){
         isDone = false;
     }
+    public String extractDay(String input) {
+        String upperInput = input.toUpperCase();
 
+        for (Day day : Day.values()) {
+            if (upperInput.contains(day.name())) {
+                String dayName = day.name();
+                return dayName.charAt(0) + dayName.substring(1).toLowerCase();
+            }
+        }
+        return input.trim();
+    }
 }

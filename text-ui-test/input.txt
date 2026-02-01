@@ -1,0 +1,11 @@
+todo read book
+deadline return book /by Sunday
+event project meeting /by Mon 2pm
+todo buy milk
+event team lunch /by Friday 12pm
+list
+mark 1
+mark 3
+unmark 1
+list
+bye

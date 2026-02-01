@@ -7,25 +7,23 @@ public class TaskList {
         this.taskList = new Tasks[101];
         this.taskAmount = 0;
     }
+    public static void podlesWill(String input){        // simply prints Podles will:
+        System.out.println("Podles will " + input + ":");
+    }
 
     public static void listTask(){
+        podlesWill("list");
         System.out.println("____________________________________________________________");
         for(int j = 0; j<= taskAmount; j++) {
             if (taskList[j] != null) {
-                System.out.print(j + 1 + ".[");
-                if (taskList[j].isDone()) {
-                    System.out.print("x");
-                } else {
-                    System.out.print(" ");
-                }
-                System.out.println("] " + taskList[j].getTaskName());
+                System.out.println(String.format("%d." + taskList[j].toString(),j+1));
             }
         }
         System.out.println("____________________________________________________________");
     }
     public static void markList(String[] input, boolean markThis) {
         int sizeofString = input.length;
-        for (int j = 0; j < sizeofString; j++) {
+            for(int j = 0; j < sizeofString; j++) {
             int taskIndex = Integer.parseInt(input[j]);
             if (markThis) {
                 taskList[taskIndex - 1].markDone();
@@ -42,13 +40,13 @@ public class TaskList {
         }
     }
 
-    public static void addTask(String input){
-        Tasks newTask = new Tasks(input);
+    public static void addTask(Tasks newTask){
         taskList[taskAmount] = newTask;
         taskAmount++;
 
         System.out.println("____________________________________________________________");
-        System.out.println("added: " + input);
+        System.out.println(String.format(   "Podles has added: %n   " + taskList[taskAmount-1].toString() +
+                                            "%n" + "now you have %d tasks in the list.", taskAmount));
         System.out.println("____________________________________________________________");
     }
 }
