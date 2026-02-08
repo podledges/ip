@@ -1,10 +1,10 @@
-public class Tasks {
+public class Task {
 
     private String taskName;
     private boolean isDone;
     private Category category;
 
-    public Tasks(String s, Category category){
+    public Task(String s, Category category){
         this.taskName = s;
         this.isDone = false;
         this.category = category;

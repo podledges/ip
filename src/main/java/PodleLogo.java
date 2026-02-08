@@ -1,4 +1,4 @@
-public class podleLogo {                // ASCII ART created using
+public class PodleLogo {                // ASCII ART created using
     public static final String logo =  "                                                                                                                          \n"
             + "                                  .:.:-...    ..   .      .   .      .    .      .+-++.                                   \n"
             + "                                ::-..              .                        ...     ..:-**.                               \n"

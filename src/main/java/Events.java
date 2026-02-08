@@ -1,4 +1,4 @@
-public class Events extends Tasks {
+public class Events extends Task {
     private String eventStart;
     private String eventEnd;
     public Events(String[] eventString) {
