@@ -1,3 +1,12 @@
+package podle;
+
+import podle.task.Deadlines;
+import podle.task.Events;
+import podle.task.TaskList;
+import podle.task.ToDo;
+import podle.ui.PodleLogo;
+import podle.command.Command;
+import podle.exception.InvalidInputException;
 import java.util.Scanner;
 
 public class PodleGPT {

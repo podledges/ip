@@ -1,3 +1,6 @@
+package podle.task;
+import podle.exception.InvalidInputException;
+
 public class Task {
 
     private String taskName;

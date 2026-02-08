@@ -1,3 +1,6 @@
+package podle.task;
+import podle.exception.InvalidInputException;
+
 public class TaskList {
 
     private static int taskAmount;
@@ -26,7 +29,7 @@ public class TaskList {
             for(int j = 0; j < sizeofString; j++) {
                 int taskIndex = Integer.parseInt(input[j]);
                 if (taskIndex > taskAmount || taskIndex <= 0) {
-                    throw new InvalidInputException(String.format("Podles sincerely regres to inform you, that the Task," +  // might have to shorten
+                    throw new InvalidInputException(String.format("Podles sincerely regres to inform you, that the podle.task.Task," +  // might have to shorten
                             " numbered with the index: " + taskIndex + " does not seem to currently exist within " +
                             " %n my database and it pains me to ask you to perhaps provide a taks index that is within" +
                             "the range of 1 <= <input> <= " + taskAmount + 1 + ", only if these conditions are met " +

@@ -1,3 +1,5 @@
+package podle.task;
+
 public class Deadlines extends Task{
 
     private String by;

@@ -1,3 +1,5 @@
+package podle.ui;
+
 public class PodleLogo {                // ASCII ART created using
     public static final String logo =  "                                                                                                                          \n"
             + "                                  .:.:-...    ..   .      .   .      .    .      .+-++.                                   \n"

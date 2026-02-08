@@ -1,3 +1,5 @@
+package podle.task;
+
 public class Events extends Task {
     private String eventStart;
     private String eventEnd;
