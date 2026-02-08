@@ -69,7 +69,11 @@ public class PodleGPT {
                     break;
 
                 case ADD, TODO: // argument must contain some text or anything
-                    TaskList.addTask(new ToDo(arguments));
+                    try {
+                        TaskList.addTask(new ToDo(arguments));
+                    } catch(InvalidInputException e){
+                        System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e.getMessage() ));
+                    }
                     break;
 
                 case DEADLINE:  // argument must have a name followed by a Day or a Time or a DATE

@@ -5,6 +5,11 @@ public class Task {
     private Category category;
 
     public Task(String s, Category category){
+        if(s.isEmpty()){
+            throw new InvalidInputException(String.format(  "Your task cant NOT have a name %n" +
+                                                            "How else will you get attched to it?" +
+                                                            " Try adding it again! (WITH A NAME THIS TIME)"));
+        }
         this.taskName = s;
         this.isDone = false;
         this.category = category;
