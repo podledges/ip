@@ -28,8 +28,6 @@ public class PodleGPT {
                 String commandWord = inputParts[0].toUpperCase();
                 String arguments = (inputParts.length > 1) ? inputParts[1] : "";   // checking if the second part is not empty,
 
-                // add error handling here -- as in like the splitting of the input
-
 
                 Command cmd = Command.UNKNOWN;
                 for(Command c : Command.values()){
@@ -85,7 +83,7 @@ public class PodleGPT {
                     }
                     break;
 
-                case DEADLINE:  // argument must have a name followed by a Day or a Time or a DATE
+                case DEADLINE:  // TODO: HANDLE ERRORS FOR DEADLINE AND EVENT
                     String[] deadlineString = arguments.trim().split("/", 2); // split into
                     TaskList.addTask(new Deadlines(deadlineString));
                     break;
