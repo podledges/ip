@@ -2,6 +2,10 @@ package podle.task;
 import podle.exception.InvalidInputException;
 import podle.ui.*;
 
+import java.io.IOException;
+
+import static podle.task.Storage.updateMark;
+import static podle.task.Storage.updateUnMark;
 import static podle.ui.Ui.*;
 
 public class TaskList {
@@ -24,7 +28,7 @@ public class TaskList {
         }
         printLine();
     }
-    public static void markList(String[] input, boolean shouldMark) {
+    public static void markList(String[] input, boolean shouldMark) throws IOException {
         int sizeofString = input.length;
             for(int j = 0; j < sizeofString; j++) {
                 int taskIndex = Integer.parseInt(input[j]);
@@ -39,8 +43,10 @@ public class TaskList {
                 }
                 if (shouldMark) {
                     taskList[taskIndex - 1].markDone();
+                    updateMark(taskIndex);
                 } else {
                     taskList[taskIndex - 1].markNotDone();
+                    updateUnMark(taskIndex);
                 }
             }
         listTask();

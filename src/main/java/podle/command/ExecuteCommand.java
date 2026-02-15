@@ -1,11 +1,10 @@
 package podle.command;
 
 import podle.exception.InvalidInputException;
-import podle.task.Deadlines;
-import podle.task.Events;
-import podle.task.TaskList;
-import podle.task.ToDo;
+import podle.task.*;
 import podle.ui.Ui;
+
+import java.io.IOException;
 
 public class ExecuteCommand {
 
@@ -21,7 +20,7 @@ public class ExecuteCommand {
         this.arg = s;
     }
 
-    public void Execute(TaskList tasks, Ui ui) throws InterruptedException {
+    public void Execute(TaskList tasks, Ui ui) throws InterruptedException, IOException {
         switch(cmd) {   // move to PARSER class
         case BYE:
             ui.printBye();
@@ -53,6 +52,7 @@ public class ExecuteCommand {
         case ADD, TODO: // argument must contain some text or anything
             try {
                 TaskList.addTask(new ToDo(arg));
+                Storage.appendToFile(arg, Category.TODO);
             } catch(InvalidInputException e){
                 System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e.getMessage() ));
             }
@@ -61,11 +61,13 @@ public class ExecuteCommand {
         case DEADLINE:  // TODO: HANDLE ERRORS FOR DEADLINE AND EVENT
             String[] deadlineString = arg.trim().split("/", 2); // split into
             TaskList.addTask(new Deadlines(deadlineString));
+            Storage.appendToFile(deadlineString, Category.DEADLINE);
             break;
 
         case EVENT:     // argument must have a name followed by 2 Days or 2 Times or 2 DATEs
             String[] eventString = arg.trim().split("/", 3); // split into
             TaskList.addTask(new Events(eventString));
+            Storage.appendToFile(eventString, Category.EVENT);
             break;
 
         case UNKNOWN:
