@@ -26,10 +26,10 @@ public class Storage {
     public static void appendToFile(String[] textToAppend, Category c) throws IOException {
         FileWriter fw = new FileWriter(filePath.toFile(), true); // create a FileWriter in append mode
         if (c == DEADLINE){
-            fw.write(String.format("D | 0 | " + textToAppend[0] + "|" + textToAppend[1]));
+            fw.write(String.format("D | 0 | %s | %s%n", textToAppend[0], textToAppend[1]));
         }
         else if(c == EVENT){
-            fw.write(String.format("E | 0 | " + textToAppend[0] + "|" + textToAppend[1] + "/" + textToAppend[2]));
+            fw.write(String.format("E | 0 | %s | %s/%s%n", textToAppend[0], textToAppend[1], textToAppend[2]));
         }
         fw.close();
     }
@@ -59,7 +59,7 @@ public class Storage {
     }
 
 
-    private static void readFromFile() throws IOException{
+    public static void readFromFile() throws IOException{
         List<String> lines = readAllLines(filePath);
         int index = 0;
         String[] toMark = new String[100];  //TODO fix this stupid method

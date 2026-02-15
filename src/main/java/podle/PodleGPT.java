@@ -8,9 +8,11 @@ import podle.task.TaskList;
 
 import podle.ui.*;
 
+import java.io.IOException;
+
 public class PodleGPT {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
         TaskList tasks = new TaskList();
         Ui userinterface = new Ui();
@@ -18,6 +20,9 @@ public class PodleGPT {
         boolean isexit = false;
         if (!Storage.doesFileExist()){
             Storage.createNewFile();
+        }
+        else {
+            Storage.readFromFile();
         }
         while (!isexit) {
             try {
