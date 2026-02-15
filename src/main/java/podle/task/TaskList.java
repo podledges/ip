@@ -1,5 +1,8 @@
 package podle.task;
 import podle.exception.InvalidInputException;
+import podle.ui.*;
+
+import static podle.ui.Ui.*;
 
 public class TaskList {
 
@@ -10,19 +13,16 @@ public class TaskList {
         this.taskList = new Task[101];
         this.taskAmount = 0;
     }
-    public static void podlesWill(String input){        // simply prints Podles will:
-        System.out.println("Podles will " + input + ":");
-    }
 
     public static void listTask(){
-        podlesWill("list");
-        System.out.println("____________________________________________________________");
+        Ui.podlesWill("list");
+        printLine();
         for(int j = 0; j<= taskAmount; j++) {
             if (taskList[j] != null) {
                 System.out.println(String.format("%d." + taskList[j].toString(),j+1));
             }
         }
-        System.out.println("____________________________________________________________");
+        printLine();
     }
     public static void markList(String[] input, boolean shouldMark) {
         int sizeofString = input.length;
@@ -45,20 +45,19 @@ public class TaskList {
             }
         listTask();
         if (shouldMark) {
-            System.out.println("what an AMAZING job!!" + "❀.(*´◡`*)❀" + "       MARKED!!");
+            Ui.printMarked();
         }
         else {
-            System.out.println("OOOPS   " + "(｡•́︿•̀｡)" + "        how did that get marked...");
+            Ui.printUnmarked();
         }
     }
 
     public static void addTask(Task newTask){
         taskList[taskAmount] = newTask;
         taskAmount++;
-
-        System.out.println("____________________________________________________________");
+        Ui.printLine();
         System.out.println(String.format(   "Podles has added: %n   " + taskList[taskAmount-1].toString() +
                                             "%n" + "now you have %d tasks in the list.", taskAmount));
-        System.out.println("____________________________________________________________");
+        Ui.printLine();
     }
 }
