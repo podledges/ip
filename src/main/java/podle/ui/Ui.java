@@ -22,7 +22,7 @@ public class Ui {
     }
 
     public void printError(String e) {
-        System.out.println("Podles senses something went wrong..." + e);
+        System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e + "%n Try again!"));
     }
 
     public static void podlesWill(String input){

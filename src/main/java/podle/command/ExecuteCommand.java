@@ -31,6 +31,16 @@ public class ExecuteCommand {
         case BYEBYE:
             ui.printByeBye();
             System.exit(0);
+            break;
+
+        case DELETE:
+            try {
+                TaskList.deleteTask(arg);
+
+            } catch(InvalidInputException e) {
+                ui.printError(e.getMessage());
+            }
+            break;
 
         case MARK, UNMARK:  //Argument must contain a number or multiple numbers,
             try{
@@ -42,7 +52,7 @@ public class ExecuteCommand {
                     TaskList.markList(numberString, true);
                 }
             } catch(InvalidInputException e) {
-                System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e.getMessage() + "%n Try again!"));
+                ui.printError(e.getMessage());
             }
             break;
 
@@ -54,7 +64,7 @@ public class ExecuteCommand {
             try {
                 TaskList.addTask(new ToDo(arg));
             } catch(InvalidInputException e){
-                System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e.getMessage() ));
+                ui.printError(e.getMessage());
             }
             break;
 
