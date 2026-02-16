@@ -45,11 +45,16 @@ public class ExecuteCommand {
             try{
                 String tempString = arg.replaceAll("[a-zA-Z].*", ""); // remove rtandom text towards the end
                 String[] numberString = tempString.trim().split("[,\\s]+"); // split into
-                if (cmd.equals(Command.UNMARK)) {
-                    TaskList.markList(numberString, false);
-                } else {
-                    TaskList.markList(numberString, true);
-                }
+                int sizeofString = numberString.length;
+                for(int j = 0; j < sizeofString; j++) {
+                    int taskIndex = Integer.parseInt(numberString[j]);
+                    if (cmd.equals(Command.UNMARK)) {
+                        TaskList.markList(taskIndex, false);
+                    }
+                    else {
+                    TaskList.markList(taskIndex, true);
+                    }
+                 }
             } catch(InvalidInputException e) {
                 ui.printError(e.getMessage());
             }
@@ -61,23 +66,46 @@ public class ExecuteCommand {
 
         case ADD, TODO: // argument must contain some text or anything
             try {
-                TaskList.addTask(new ToDo(arg));
-                Storage.appendToFile(arg, Category.TODO);
+                ToDo todo = new ToDo(arg);
+                TaskList.addTask(todo);
+                Storage.appendToFile(todo);
             } catch(InvalidInputException e){
                 ui.printError(e.getMessage());
             }
             break;
 
-        case DEADLINE:  // TODO: HANDLE ERRORS FOR DEADLINE AND EVENT
-            String[] deadlineString = arg.trim().split("/", 2); // split into
-            TaskList.addTask(new Deadlines(deadlineString));
-            Storage.appendToFile(deadlineString, Category.DEADLINE);
+        case DEADLINE:
+            try {
+                String[] deadlineString = arg.trim().split("/", 2);
+                if (deadlineString.length < 2) {
+                    ui.printError("I need a NAME AND TIME (use /by).");
+                    break;
+                }
+                Deadlines deadlines = new Deadlines(deadlineString);
+                TaskList.addTask(deadlines);
+                Storage.appendToFile(deadlines);
+            } catch (ArrayIndexOutOfBoundsException | IOException e) {
+                ui.printError(e.getMessage());
+            } catch (Exception e) {
+                ui.printError("unexpectedly..." + e.getMessage());
+            }
             break;
 
-        case EVENT:     // argument must have a name followed by 2 Days or 2 Times or 2 DATEs
-            String[] eventString = arg.trim().split("/", 3); // split into
-            TaskList.addTask(new Events(eventString));
-            Storage.appendToFile(eventString, Category.EVENT);
+        case EVENT:
+            try {
+                String[] eventString = arg.trim().split("/", 3);
+                if (eventString.length < 3) {
+                    ui.printError("I need a NAME and TWO TIMES... wut");
+                    break;
+                }
+                Events event = new Events(eventString);
+                TaskList.addTask(event);
+                Storage.appendToFile(event);
+            } catch (ArrayIndexOutOfBoundsException | IOException e) {
+                ui.printError(e.getMessage());
+            } catch (Exception e) {
+                ui.printError("unexpectedly..." + e.getMessage());
+            }
             break;
 
         case UNKNOWN:

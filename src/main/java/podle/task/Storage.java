@@ -16,91 +16,75 @@ public class Storage {
     private static Path filePath = Paths.get("./data/PodleGPT.txt"); // .txt file location
 
 
-    public static void appendToFile(String textToAppend, Category c) throws IOException {
+    public static void appendToFile(Task task) throws IOException {
         FileWriter fw = new FileWriter(filePath.toFile(), true); // create a FileWriter in append mode
-        if(c == TODO){
-            fw.write(String.format("T | 0 | " + textToAppend));
-        }
-        fw.close();
-    }
-    public static void appendToFile(String[] textToAppend, Category c) throws IOException {
-        FileWriter fw = new FileWriter(filePath.toFile(), true); // create a FileWriter in append mode
-        if (c == DEADLINE){
-            fw.write(String.format("D | 0 | %s | %s%n", textToAppend[0], textToAppend[1]));
-        }
-        else if(c == EVENT){
-            fw.write(String.format("E | 0 | %s | %s/%s%n", textToAppend[0], textToAppend[1], textToAppend[2]));
-        }
+        fw.write(task.toFileFormat() + System.lineSeparator());
         fw.close();
     }
 
-    public static void updateMark(int taskIndex)throws IOException{
+    public static void updateMark(int taskIndex, boolean shouldMark)throws IOException{
         List<String> lines = readAllLines(filePath);
         int lineIndex = taskIndex -1;
         if(lineIndex >= 0 && lineIndex < lines.size()){
             String line = lines.get(lineIndex);
             String[] splitLine = line.split("[|]");
-            splitLine[1] = " 1 ";
-            lines.set(lineIndex, String.join("|", splitLine));
-        }
-        Files.write(filePath,lines);
-    }
-
-    public static void updateUnMark(int taskIndex)throws IOException{
-        List<String> lines = readAllLines(filePath);
-        int lineIndex = taskIndex -1;
-        if(lineIndex >= 0 && lineIndex < lines.size()){
-            String line = lines.get(lineIndex);
-            String[] splitLine = line.split("[|]");
-            splitLine[1] = " 0 ";
-            lines.set(lineIndex, String.join("|", splitLine));
+            if (shouldMark) {
+                splitLine[1] = " 1 ";
+                lines.set(lineIndex, String.join("|", splitLine));
+            }
+            else {
+                splitLine[1] = " 0 ";
+                lines.set(lineIndex, String.join("|", splitLine));
+            }
         }
         Files.write(filePath,lines);
     }
 
 
-    public static void readFromFile() throws IOException{
-        List<String> lines = readAllLines(filePath);
-        int index = 0;
-        String[] toMark = new String[100];  //TODO fix this stupid method
-        int markIndex = 0;
-        for(String line: lines){
-            String[] splitLine = line.split("[|]");
-            String cateogeryLine = splitLine[0].replaceAll("\\s+", "");
-            String statusLine = splitLine[1].replaceAll("\\s+", "");
 
-            if (cateogeryLine.equals("T")){
-                TaskList.addTask(new ToDo(splitLine[2]));
-                if(statusLine.equals("1")){
-                    toMark[markIndex] = String.valueOf(index);
-                    markIndex++;
-                }
-            }
-            else if (cateogeryLine.equals("D")){
-                String[] deadlineString = new String[2];
-                deadlineString[0] = splitLine[2];
-                deadlineString[1] = splitLine[3];
-                TaskList.addTask(new Deadlines(deadlineString));
-                if(statusLine.equals("1")){
-                    toMark[markIndex] = String.valueOf(index);
-                    markIndex++;
-                }
-            }
-            else if (cateogeryLine.equals("E")){
-                String[] eventString = new String[3];
-                String[] tempString = splitLine[3].split("[-/]");
-                eventString[0] = splitLine[2];
-                eventString[1] = tempString[0];
-                eventString[1] = tempString[1];
-                TaskList.addTask(new Events(eventString));
-                if(statusLine.equals("1")){
-                    toMark[markIndex] = String.valueOf(index);
-                    markIndex++;
-                }
-            }
-            index++;
+    public static void deleteLine(int taskIndex) throws IOException{
+        List<String> lines = Files.readAllLines(filePath);
+        int internalIndex = taskIndex - 1;
+        if (internalIndex >= 0 && internalIndex < lines.size()) {
+            lines.remove(internalIndex);
+            Files.write(filePath, lines);
         }
-        TaskList.markList(toMark, true);
+        else {
+            System.out.println("Invalid index! No line deleted from file.");
+        }
+    }
+
+    public static void readFromFile() throws IOException {
+        List<String> lines = readAllLines(filePath);
+        int lineIndex = 0;
+        for (String line : lines) {
+            if (line == null || line.trim().isEmpty()) {
+                continue;
+            }
+            String[] parts = line.split("[|]");
+
+            String cateogeryLine = parts[0].replaceAll("\\s+", "");
+            String statusLine = parts[1].replaceAll("\\s+", "");
+
+            Task newTask = null;
+
+            // This switch acts as your "Factory"
+            switch (cateogeryLine) {
+            case "T":
+                newTask = new ToDo(parts[2].trim());
+                break;
+            case "D":
+                newTask = Deadlines.fromFileFormat(parts);
+                break;
+            case "E":
+                newTask = Events.fromFileFormat(parts);
+                break;
+            }
+            if (newTask != null) {
+                if (statusLine.equals("1")) newTask.markDone(); // Use that concrete method we talked about!
+                TaskList.addTask(newTask);
+            }
+        }
     }
 
     public static boolean doesFileExist(){

@@ -4,9 +4,10 @@ import podle.ui.*;
 
 import java.util.ArrayList;
 
+import static podle.task.Storage.deleteLine;
 import static podle.ui.Ui.*;
 import static podle.task.Storage.updateMark;
-import static podle.task.Storage.updateUnMark;
+
 import java.io.IOException;
 public class TaskList {
 
@@ -31,22 +32,18 @@ public class TaskList {
         }
         Ui.printLine();
     }
-    public static void markList(String[] input, boolean shouldMark) throws IOException {
-        int sizeofString = input.length;
-        for(int j = 0; j < sizeofString; j++) {
-            int taskIndex = Integer.parseInt(input[j]);
-            if ((taskIndex > taskAmount + 1) || taskIndex <= 0) {
-                throw new InvalidInputException(String.format("Podles sincerely regres to inform you, that " + taskIndex +
-                        " seems to be out of range, try an index that is  " + "1 <= <input> <= " + taskAmount + 1 + ", "));
-            }
-                if (shouldMark) {
-                    taskList.get(taskIndex - 1).markDone();
-                    updateMark(taskIndex);
-                } else {
-                    taskList.get(taskIndex - 1).markNotDone();
-                    updateUnMark(taskIndex);
-                }
-            }
+    public static void markList(int taskIndex, boolean shouldMark) throws IOException {
+        if ((taskIndex > taskAmount + 1) || taskIndex <= 0) {
+            throw new InvalidInputException(String.format("Podles sincerely regres to inform you, that " + taskIndex +
+                    " seems to be out of range, try an index that is  " + "1 <= <input> <= " + taskAmount + 1 + ", "));
+        }
+        if (shouldMark) {
+            taskList.get(taskIndex - 1).markDone();
+        }
+        else {
+            taskList.get(taskIndex - 1).markNotDone();
+        }
+        updateMark(taskIndex,shouldMark);
         listTask();
         if (shouldMark) {
             Ui.printMarked();
@@ -64,7 +61,7 @@ public class TaskList {
                                             "%n" + "now you have %d tasks in the list.", taskAmount));
         Ui.printLine();
     }
-    public static void deleteTask(String input) {
+    public static void deleteTask(String input) throws IOException {
         int taskIndex = Integer.parseInt(input);
         if ((taskIndex > taskAmount + 1) || taskIndex <= 0) {
             throw new InvalidInputException(String.format("Podles sincerely regres to inform you, that " + taskIndex +
@@ -74,6 +71,7 @@ public class TaskList {
         System.out.println("Podles has removed the task below from the list!!!!");
         echoTask(taskIndex-1);
         taskList.remove(taskIndex - 1);
+        deleteLine(taskIndex);
         taskAmount--;
         System.out.println("You have " + taskAmount + " remaining tasks in the list!!" );
         Ui.printLine();
