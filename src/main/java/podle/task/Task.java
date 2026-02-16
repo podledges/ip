@@ -1,13 +1,12 @@
 package podle.task;
 import podle.exception.InvalidInputException;
 
-public class Task {
+public abstract class Task {
 
-    private String taskName;
-    private boolean isDone;
-    private Category category;
+    protected  String taskName;
+    protected boolean isDone;
 
-    public Task(String s, Category category){
+    public Task(String s){
         if(s.isEmpty()){
             throw new InvalidInputException(String.format(  "Your task cant NOT have a name %n" +
                                                             "How else will you get attched to it?" +
@@ -15,24 +14,10 @@ public class Task {
         }
         this.taskName = s;
         this.isDone = false;
-        this.category = category;
-        podlesWill(category.name());
     }
 
     public boolean isDone(){
         return this.isDone;
-    }
-
-    public String toString() {
-        if(isDone){
-        return String.format("[%s][X] " + this.taskName, category.name().charAt(0));
-        }
-        else {
-        return String.format("[%s][ ] " + this.taskName, category.name().charAt(0));
-        }
-    }
-    public static void podlesWill(String input){        // simply prints Podles will:
-        System.out.println("Podles will add " + input);
     }
 
     public void markDone(){
@@ -42,6 +27,12 @@ public class Task {
     public void markNotDone(){
         isDone = false;
     }
+
+
+    public abstract String toFileFormat();
+
+
+
     public String extractDay(String input) {
         String upperInput = input.toUpperCase();
 
@@ -53,4 +44,6 @@ public class Task {
         }
         return input.trim();
     }
+
+
 }
