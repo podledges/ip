@@ -18,7 +18,7 @@ public class Storage {
 
     public static void appendToFile(Task task) throws IOException {
         FileWriter fw = new FileWriter(filePath.toFile(), true); // create a FileWriter in append mode
-        fw.write(task.toFileFormat() + System.lineSeparator());
+        fw.write(task.toFileFormat());
         fw.close();
     }
 

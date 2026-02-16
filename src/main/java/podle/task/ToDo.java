@@ -10,7 +10,7 @@ public class ToDo extends Task {
     @Override
     public String toFileFormat() {
     int status = isDone ? 1 : 0;
-    return String.format("T | %d | %s" , status, this.taskName);
+    return String.format("T | %d | %s%n" , status, this.taskName);
     }
 
     public static ToDo fromFileFormat(String[] parts) {     // parts[0] is 'D', parts[1] is status, parts[2] is description, parts[3] is 'by'

@@ -22,7 +22,7 @@ public class Events extends Task {
     @Override
     public String toFileFormat() {
         int status = isDone ? 1 : 0;
-        return String.format("E | %d | %s | %s-%s",status, this.taskName, this.eventStart, this.eventEnd);
+        return String.format("E | %d | %s | %s-%s%n",status, this.taskName, this.eventStart, this.eventEnd);
     }
 
 

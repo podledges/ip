@@ -27,7 +27,7 @@ public class Deadlines extends Task{
     @Override
     public String toFileFormat() {
         int status = isDone ? 1 : 0;
-        return String.format("D | %d | %s | %s",status, this.taskName, this.by);
+        return String.format("D | %d | %s | %s%n",status, this.taskName, this.by);
     }
 }
 
