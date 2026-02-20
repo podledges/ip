@@ -1,7 +1,8 @@
 # PodleGPT
 
-> Dedicated to my lovely Poodle Podles.<br>
-> Your personal command-line assistant.
+> Dedicated to my lovely Poodle *Podles*.<br>
+> Your personal command-line assistant.<br>
+> *CS2113 Individual Project*
 
 PodleGPT is a command-line application built in Java to help manage tasks, track progress, and keep your daily activities organized.
 
