@@ -78,7 +78,7 @@ public class ExecuteCommand {
             try {
                 String[] deadlineString = arg.trim().split("/", 2);
                 if (deadlineString.length < 2) {
-                    ui.printError("I need a NAME AND TIME (use /by).");
+                    ui.printError("I need a NAME AND TIME (use /by <DEADLINE>).");
                     break;
                 }
                 Deadlines deadlines = new Deadlines(deadlineString);
@@ -95,7 +95,7 @@ public class ExecuteCommand {
             try {
                 String[] eventString = arg.trim().split("/", 3);
                 if (eventString.length < 3) {
-                    ui.printError("I need a NAME and TWO TIMES... wut");
+                    ui.printError("I need a NAME and TWO TIMINGS (grrrr use /<START TIME> /<ENDTIME>");
                     break;
                 }
                 Events event = new Events(eventString);
