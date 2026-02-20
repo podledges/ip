@@ -1,5 +1,6 @@
 # PodleGPT
 
+> Dedicated to my Poodle, Podles
 > Your personal command-line assistant.
 
 PodleGPT is a command-line application built in Java to help manage tasks, track progress, and keep your daily activities organized.
@@ -20,7 +21,7 @@ PodleGPT is a command-line application built in Java to help manage tasks, track
 2. Copy the file to the folder you want to use as the home folder.
 
 ### Running PodleGPT
-[Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar PodleGPT.jar` command to run the application[cite: 9].
+[Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar PodleGPT.jar` command to run the application.
 
 A welcome message should appear in a few seconds (Example given below)
 
