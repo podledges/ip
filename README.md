@@ -4,17 +4,28 @@
 
 PodleGPT is a command-line application built in Java to help manage tasks, track progress, and keep your daily activities organized.
 
-## [cite_start]Quick start [cite: 4]
+## Prerequisites
+1. Ensure you have Java 17 or above installed in your Computer.
+   **Mac users:** Ensure you have the precise JDK version prescribed [here]([https://se-education.org/guides/tutorials/javaInstallationMac.html]).
+   
+## Quick start
+### Installation
+1. Clone the project into the folder you want to use as the root folder using the following command:
+   ```bash
+   git clone [https://github.com/podledges/ip.git](https://github.com/podledges/ip.git)
+2. `cd` into the folder you put the jar file in, and use the `java -jar PodleGPT.jar` command to run the application
 
-1. [cite_start]Ensure you have Java 17 or above installed on your computer[cite: 5].
-2. Download the latest `.jar` file from the Releases page.
-3. Copy the file to the folder you want to use as the home folder.
-4. [cite_start]Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar PodleGPT.jar` command to run the application[cite: 9].
+### Alternative for Installation
+1. Download the latest `.jar` file from the Releases page (to be implemented).
+2. Copy the file to the folder you want to use as the home folder.
+
+### Running PodleGPT
+[Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar PodleGPT.jar` command to run the application[cite: 9].
 
 A welcome message should appear in a few seconds (Example given below)
 
 
-Features 
+## Features 
 
 ### Adding a ToDo Task: `todo`, `add`
 Creates a basic task in the tracker.
@@ -62,6 +73,8 @@ The following table summarizes the available commands:
 | **UNMARK** | `unmark <INDEX1>, [INDEX2]...`| `unmark 1` |
 | **DELETE** | `delete <INDEX>` | `delete 2` |
 | **QUIT** | `bye` or `byebye` | `bye` |
+
+## Showcase
 
 Welcome Message:
 
