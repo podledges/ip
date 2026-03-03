@@ -16,7 +16,7 @@ import java.util.List;
 public class Parser {
 
     public static Command parse(String input) {
-        String[] inputParts = input.trim().split(" ", 2);    // split after the first space char
+        String[] inputParts = input.trim().split("\\s+", 2);    // split after the first space char
         String command = inputParts[0].toUpperCase();
         String arguments = (inputParts.length > 1) ? inputParts[1] : "";   // checking if the second part is not empty,
         AllCommands cmd = determineCommand(command);
@@ -37,6 +37,9 @@ public class Parser {
 
         case LIST:
             return new ListCommand();
+
+        case FIND:
+            return prepareFind(arguments);
 
         case ADD, TODO: // argument must contain some text or anything
             return prepareAdd(arguments, shouldPrint);
@@ -85,7 +88,13 @@ public class Parser {
             return new EventCommand(eventString, shouldPrint);
         }
 
-
+    private static Command prepareFind(String arguments){
+        if (arguments == null || arguments.trim().isEmpty()) {
+            return new IncorrectCommand(String.format("We cant find nothing as nothing is nothing %n") +
+                            String.format("pls type something for the search term i.e find <search_term>"));
+        }
+            return new FindCommand(arguments);
+    }
     private static Command prepareMarkIndexes(String arguments, AllCommands cmd){
 
         boolean shouldMark = false;
