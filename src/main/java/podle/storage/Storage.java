@@ -1,4 +1,6 @@
-package podle.task;
+package podle.storage;
+import podle.task.*;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,13 +10,14 @@ import java.util.List;
 
 import static java.nio.file.Files.*;
 import static java.nio.file.Files.readAllLines;
-import static podle.task.Category.*;
 
 public class Storage {
 
+    private static Path filePath;
 
-    private static Path filePath = Paths.get("./data/PodleGPT.txt"); // .txt file location
-
+    public Storage(Path filePath) {
+        this.filePath = filePath;
+    }
 
     public static void appendToFile(Task task) throws IOException {
         FileWriter fw = new FileWriter(filePath.toFile(), true); // create a FileWriter in append mode
@@ -22,7 +25,7 @@ public class Storage {
         fw.close();
     }
 
-    public static void updateMark(int taskIndex, boolean shouldMark)throws IOException{
+    public static void markStorageList(int taskIndex, boolean shouldMark)throws IOException{
         List<String> lines = readAllLines(filePath);
         int lineIndex = taskIndex -1;
         if(lineIndex >= 0 && lineIndex < lines.size()){
@@ -56,34 +59,59 @@ public class Storage {
 
     public static void readFromFile() throws IOException {
         List<String> lines = readAllLines(filePath);
-        int lineIndex = 0;
         for (String line : lines) {
             if (line == null || line.trim().isEmpty()) {
-                continue;
+                    continue;
             }
-            String[] parts = line.split("[|]");
 
-            String cateogeryLine = parts[0].replaceAll("\\s+", "");
-            String statusLine = parts[1].replaceAll("\\s+", "");
+            String[] parts = splitLine(line);
+            String cateogery = removeWhiteSpaces(parts[1]);
+            boolean shouldMark = shouldMark(parts[1]);
 
             Task newTask = null;
 
-            // This switch acts as your "Factory"
-            switch (cateogeryLine) {
-            case "T":
-                newTask = new ToDo(parts[2].trim());
-                break;
-            case "D":
-                newTask = Deadlines.fromFileFormat(parts);
-                break;
-            case "E":
-                newTask = Events.fromFileFormat(parts);
-                break;
+            switch (cateogery) {
+                case "T":
+                    newTask = new ToDo(parts[2].trim());
+                    break;
+                case "D":
+                    newTask = Deadlines.fromFileFormat(parts);
+                    break;
+                case "E":
+                    newTask = Events.fromFileFormat(parts);
+                    break;
+                }
+                if (newTask != null) {
+                    boolean shouldPrint = false;
+                    if (shouldMark) {
+                        newTask.markDone();
+                    }
+                    TaskList.addTask(newTask, shouldPrint);
+                }
             }
-            if (newTask != null) {
-                if (statusLine.equals("1")) newTask.markDone(); // Use that concrete method we talked about!
-                TaskList.addTask(newTask);
-            }
+        }
+
+    public static String removeWhiteSpaces(String s){
+        return s.replaceAll("\\s+", "");
+    }
+
+    public static String[] splitLine(String line)
+    {
+        return line.split("[|]");
+    }
+
+    public static boolean shouldMark(String status){
+        String temp = removeWhiteSpaces(status);
+        return temp.equals("1");
+    }
+
+
+    public void initializeStorage() throws IOException {
+        if (doesFileExist()){
+            readFromFile();
+        }
+        else{
+            createNewFile();
         }
     }
 

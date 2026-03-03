@@ -15,14 +15,18 @@ public class Ui {
     public String getInput() {
         return input.nextLine();
     }
-    public void printGreeting() {
+    public  void printGreeting() {
         System.out.println(PodleLogo.logo);
         System.out.println("HELLO! I am Podles! made by Podles!");  // print greeting
         System.out.println("What SHALL Podles do for you?! ( •◡-)-♡");
     }
 
-    public void printError(String e) {
+    public static void printError(String e) {
         System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e + "%n Try again!"));
+    }
+
+    public static void printMessage(String s){
+        System.out.println(s);
     }
 
     public static void podlesWill(String input){
@@ -33,17 +37,17 @@ public class Ui {
         System.out.println("____________________________________________________________");
     }
 
-    public static void printMarked(){
+    public static void printMarkedMessage(){
         System.out.println("what an AMAZING job!!" + "❀.(*´◡`*)❀" + "       MARKED!!");
     }
-    public static void printUnmarked(){
+    public static void printUnmarkedMessage(){
         System.out.println("OOOPS   " + "(｡•́︿•̀｡)" + "        how did that get marked...");
     }
     public void printByeBye(){
         System.out.println("deadge");
     }
 
-    public void printBye() throws InterruptedException {
+    public static void printBye() throws InterruptedException {
         System.out.println("Y dont u want to play with podles .·°՞(っ-ᯅ-ς)՞°·. SADGE");
         System.out.println("\n" + "████ 22%");
         Thread.sleep(800);

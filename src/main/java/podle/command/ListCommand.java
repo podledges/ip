@@ -1,4 +1,14 @@
 package podle.command;
 
-public class ListCommand {
+import podle.storage.Storage;
+import podle.task.TaskList;
+import podle.ui.Ui;
+
+public class ListCommand extends Command {
+
+    @Override
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
+        TaskList.listTask();
+    }
+
 }

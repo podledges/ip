@@ -1,5 +1,6 @@
 package podle.task;
 import podle.exception.InvalidInputException;
+import podle.ui.Ui;
 
 public abstract class Task {
 
@@ -22,10 +23,12 @@ public abstract class Task {
 
     public void markDone(){
         isDone = true;
+        Ui.printMarkedMessage();
     }
 
     public void markNotDone(){
         isDone = false;
+        Ui.printUnmarkedMessage();
     }
 
 
