@@ -26,7 +26,7 @@ public class Events extends Task {
     }
 
 
-    public static Events fromFileFormat(String[] parts) {     // parts[0] is 'D', parts[1] is status, parts[2] is description, parts[3] is 'by'
+    public static Events fromFileFormat(String[] parts) {
         String[] times = parts[3].split("[-/]");
         String[] data = {parts[2].trim(), times[0].trim(), times[1].trim()};
         return new Events(data);
