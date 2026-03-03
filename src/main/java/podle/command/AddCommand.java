@@ -1,4 +1,4 @@
 package podle.command;
 
-public class Command {
+public class AddCommand {
 }
