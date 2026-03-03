@@ -1,26 +1,34 @@
 package podle.command;
-
 import podle.exception.InvalidInputException;
 import podle.storage.Storage;
 import podle.task.TaskList;
 import podle.ui.Ui;
+import java.util.List;
+
+import static podle.storage.Storage.markStorageList;
 
 public class MarkCommand extends Command {
 
-    private int userInputIndex;
+    private List<Integer> userInputIndexes;
     private boolean shouldMark;
+    private boolean shouldPrint;
 
-    public MarkCommand(int userInputIndex) {
-        this.userInputIndex = userInputIndex;
-        this.shouldMark = true;
+    public MarkCommand(List<Integer> userInputIndexes, boolean shouldMark, boolean shouldPrint) {
+        this.userInputIndexes = userInputIndexes;
+        this.shouldMark = shouldMark;
+        this.shouldPrint = shouldPrint;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
-        try {
-            TaskList.markList(userInputIndex, shouldMark);
-        } catch (InvalidInputException e) {
-            ui.printError(e.getMessage());
+
+        for (int index : userInputIndexes) {
+            try {
+                tasks.markList(index, shouldMark, shouldPrint);
+                markStorageList(index,shouldMark);
+            } catch (InvalidInputException e) {
+                ui.printError(e.getMessage());
+            }
         }
     }
 }

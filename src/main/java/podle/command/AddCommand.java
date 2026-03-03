@@ -20,10 +20,10 @@ public class AddCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         try {
             ToDo todo = new ToDo(taskString);
-            TaskList.addTask(todo, shouldPrint);
-            Storage.appendToFile(todo);
+            tasks.addTask(todo, shouldPrint);
+            storage.appendToFile(todo);
         } catch (InvalidInputException e) {
-            Ui.printError(e.getMessage());
+            ui.printError(e.getMessage());
         }
     }
 }

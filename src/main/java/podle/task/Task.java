@@ -21,14 +21,18 @@ public abstract class Task {
         return this.isDone;
     }
 
-    public void markDone(){
+    public void markDone(boolean shouldPrint){
         isDone = true;
-        Ui.printMarkedMessage();
+        if (shouldPrint) {
+            Ui.printMarkedMessage();
+        }
     }
 
-    public void markNotDone(){
+    public void markNotDone(boolean shouldPrint){
         isDone = false;
-        Ui.printUnmarkedMessage();
+        if (shouldPrint) {
+            Ui.printUnmarkedMessage();
+        }
     }
 
 

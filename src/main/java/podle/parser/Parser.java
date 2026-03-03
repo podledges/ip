@@ -9,11 +9,13 @@ import podle.task.TaskList;
 import podle.ui.Ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Parser {
 
-    public Command parse(String input) {
+    public static Command parse(String input) {
         String[] inputParts = input.trim().split(" ", 2);    // split after the first space char
         String command = inputParts[0].toUpperCase();
         String arguments = (inputParts.length > 1) ? inputParts[1] : "";   // checking if the second part is not empty,
@@ -22,92 +24,37 @@ public class Parser {
 
         switch (cmd) {   // move to PARSER class
         case BYE:
-            //ui.printBye();
-            //isExit = true;
-            break;
+            return new ExitCommand();
 
         case BYEBYE:
-            //ui.printByeBye();
-            //isExit = true;
-            break;
+            return new QuickExitCommand();
 
         case DELETE:
-            try {
-                //TaskList.deleteTask(arg);
-
-            } catch (InvalidInputException e) {
-                //ui.printError(e.getMessage());
-            }
-            break;
+            return new DeleteCommand(arguments);
 
         case MARK, UNMARK:  //Argument must contain a number or multiple numbers,
-            try {
-                String tempString = arguments.replaceAll("[a-zA-Z].*", ""); // remove rtandom text towards the end
-                String[] numberString = tempString.trim().split("[,\\s]+"); // split into
-                int sizeofString = numberString.length;
-                for (int j = 0; j < sizeofString; j++) {
-                    int taskIndex = Integer.parseInt(numberString[j]);
-                    if (cmd.equals(AllCommands.UNMARK)) {
-                        TaskList.markList(taskIndex, false);
-                    } else {
-                        TaskList.markList(taskIndex, true);
-                    }
-                }
-            } catch (InvalidInputException e) {
-            //    ui.printError(e.getMessage());
-            }
-            break;
+            return prepareMarkIndexes(arguments,cmd);
 
         case LIST:
-            TaskList.listTask();
-            break;
+            return new ListCommand();
 
         case ADD, TODO: // argument must contain some text or anything
             return prepareAdd(arguments, shouldPrint);
 
         case DEADLINE:
-            try {
-                String[] deadlineString = arguments.trim().split("/", 2);
-                if (deadlineString.length < 2) {
-                   // ui.printError("I need a NAME AND TIME (use /by <DEADLINE>).");
-                    break;
-                }
-                Deadlines deadlines = new Deadlines(deadlineString);
-            //    TaskList.addTask(deadlines, shouldPrint);
-                Storage.appendToFile(deadlines);
-            } catch (ArrayIndexOutOfBoundsException | IOException e) {
-            //    ui.printError(e.getMessage());
-            } catch (Exception e) {
-            //    ui.printError("unexpectedly..." + e.getMessage());
-            }
-            break;
+            return prepareDeadline(arguments, shouldPrint);
 
         case EVENT:
-            try {
-                String[] eventString = arguments.trim().split("/", 3);
-                if (eventString.length < 3) {
-            //       ui.printError("I need a NAME and TWO TIMINGS (grrrr use /<START TIME> /<ENDTIME>");
-                    break;
-                }
-                Events event = new Events(eventString);
-            //    TaskList.addTask(event, shouldPrint);
-                Storage.appendToFile(event);
-            } catch (ArrayIndexOutOfBoundsException | IOException e) {
-           //     ui.printError(e.getMessage());
-            } catch (Exception e) {
-           //     ui.printError("unexpectedly..." + e.getMessage());
-            }
-            break;
+            return prepareEvent(arguments, shouldPrint);
 
         case UNKNOWN:
         default:
-          //  ui.printUnknownCommand();
-            break;
+            return new IncorrectCommand("that was not a valid command podles has learnt");
         }
     }
 
 
-    public  AllCommands determineCommand(String command){
+    public static AllCommands determineCommand(String command){
         for (AllCommands c : AllCommands.values()) {
             if (command.equalsIgnoreCase(c.name())) {
                 return c;
@@ -116,11 +63,11 @@ public class Parser {
         return AllCommands.UNKNOWN;
     }
 
-    private Command prepareAdd(String arguments, boolean shouldPrint){
+    private static Command prepareAdd(String arguments, boolean shouldPrint){
             return new AddCommand(arguments, shouldPrint);
         }
 
-    private Command prepareDeadline(String arguments, boolean shouldPrint){
+    private static Command prepareDeadline(String arguments, boolean shouldPrint){
         String[] deadlineString = arguments.trim().split("/", 2);
         if (deadlineString.length < 2) {
             return new IncorrectCommand("I need a NAME AND TIME (use /by <DEADLINE>).");
@@ -129,15 +76,43 @@ public class Parser {
             return new DeadlineCommand(deadlineString, shouldPrint);
         }
     }
-    private Command prepareEvent(String arguments, boolean shouldPrint){
+    private static Command prepareEvent(String arguments, boolean shouldPrint){
         String[] eventString = arguments.trim().split("/", 3);
         if (eventString.length < 3) {
-            return new IncorrectCommand("I need a NAME and TWO TIMINGS (grrrr use /<START TIME> /<ENDTIME>");
+            return new IncorrectCommand(String.format("I need a NAME and TWO TIMINGS madge! " +
+                            "%n (Hint: Event <EVENT_NAME> /<START_TIME>  /<END_TIME>"));
+        }
+            return new EventCommand(eventString, shouldPrint);
         }
 
-        else {
-            return new DeadlineCommand(deadlineString, shouldPrint);
+
+    private static Command prepareMarkIndexes(String arguments, AllCommands cmd){
+
+        boolean shouldMark = false;
+        boolean shouldPrint = true;
+
+        if (cmd.equals(AllCommands.UNMARK)) {
+            shouldMark = false;
         }
+        else if (cmd.equals(AllCommands.MARK)) {
+            shouldMark = true;
+        }
+
+        String numberString = arguments.replaceAll("[a-zA-Z].*", "");
+        String[] numberStringArray = numberString.trim().split("[,\\s]+"); // split into
+        int sizeofString = numberStringArray.length;
+        List<Integer> numberArray = new ArrayList<>();
+
+        for(int j = 0; j < sizeofString; j++) {
+            numberArray.add(Integer.parseInt(numberStringArray[j]));
+        }
+        if (numberArray.isEmpty()) {
+            return new IncorrectCommand("podles is empty, like your input, give podles a valid task index");
+        }
+        return new MarkCommand(numberArray, shouldMark, shouldPrint);
     }
+
+    }
+
 
 

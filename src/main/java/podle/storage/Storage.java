@@ -19,7 +19,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public static void appendToFile(Task task) throws IOException {
+    public void appendToFile(Task task) throws IOException {
         FileWriter fw = new FileWriter(filePath.toFile(), true); // create a FileWriter in append mode
         fw.write(task.toFileFormat());
         fw.close();
@@ -57,20 +57,19 @@ public class Storage {
         }
     }
 
-    public static void readFromFile() throws IOException {
+    public void readFromFile(TaskList tasks) throws IOException {
         List<String> lines = readAllLines(filePath);
         for (String line : lines) {
             if (line == null || line.trim().isEmpty()) {
                     continue;
             }
-
             String[] parts = splitLine(line);
-            String cateogery = removeWhiteSpaces(parts[1]);
+            String category = removeWhiteSpaces(parts[0]);
             boolean shouldMark = shouldMark(parts[1]);
 
             Task newTask = null;
 
-            switch (cateogery) {
+            switch (category) {
                 case "T":
                     newTask = new ToDo(parts[2].trim());
                     break;
@@ -80,13 +79,16 @@ public class Storage {
                 case "E":
                     newTask = Events.fromFileFormat(parts);
                     break;
+                default:
+                    System.out.println("Unknown and unfriendly category detected ERROR" + category);
+                    break;
+            }
+            if (newTask != null) {
+                boolean shouldPrint = false;
+                if (shouldMark) {
+                    newTask.markDone(shouldPrint);
                 }
-                if (newTask != null) {
-                    boolean shouldPrint = false;
-                    if (shouldMark) {
-                        newTask.markDone();
-                    }
-                    TaskList.addTask(newTask, shouldPrint);
+                tasks.addTask(newTask, shouldPrint);
                 }
             }
         }
@@ -106,9 +108,9 @@ public class Storage {
     }
 
 
-    public void initializeStorage() throws IOException {
+    public void initializeStorage(TaskList tasks) throws IOException {
         if (doesFileExist()){
-            readFromFile();
+            readFromFile(tasks);
         }
         else{
             createNewFile();

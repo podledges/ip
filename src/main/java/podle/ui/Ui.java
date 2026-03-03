@@ -62,7 +62,7 @@ public class Ui {
         System.out.println("podles was terminated...    (╥﹏╥)");
     }
 
-    public void printUnknownCommand() throws InterruptedException {
+    public static void printUnknownCommand() throws InterruptedException {
         System.out.println("Oh okay podles will go do that... (˶˃ ᵕ ˂˶)");
         System.out.println("ONE SECOND!");
         System.out.print(".");

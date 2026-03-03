@@ -1,6 +1,4 @@
+T | 1 | podle
 T | 0 | podles
-T | 0 | podlenator
-T | 0 | podledge
-T | 0 | podles
-T | 0 | podledge
-T | 0 | podlenator
+E | 0 | podledging  | sunday -tuesday
+D | 0 | podledges  | by 5pm

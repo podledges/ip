@@ -20,12 +20,12 @@ public class EventCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         try {
             Events event = new Events(eventString);
-            TaskList.addTask(event, shouldPrint);
-            Storage.appendToFile(event);
+            tasks.addTask(event, shouldPrint);
+            storage.appendToFile(event);
         } catch (ArrayIndexOutOfBoundsException | IOException e) {
-            Ui.printError(e.getMessage());
+            ui.printError(e.getMessage());
         } catch (Exception e) {
-            Ui.printError("unexpectedly..." + e.getMessage());
+            ui.printError("unexpectedly..." + e.getMessage());
         }
     }
 

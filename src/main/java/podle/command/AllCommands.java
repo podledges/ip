@@ -1,6 +1,5 @@
-package podle.command
+package podle.command;
 
-public final enum class AllCommands {
+public enum  AllCommands {
     ADD, TODO, DEADLINE, DELETE, EVENT, LIST, MARK, UNMARK, BYE, BYEBYE, UNKNOWN
 }
-

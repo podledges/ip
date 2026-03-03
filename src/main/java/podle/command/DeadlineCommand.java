@@ -23,12 +23,12 @@ public class DeadlineCommand extends Command{
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         try {
             Deadlines deadlines = new Deadlines(deadlineString);
-            TaskList.addTask(deadlines, shouldPrint);
-            Storage.appendToFile(deadlines);
+            tasks.addTask(deadlines, shouldPrint);
+            storage.appendToFile(deadlines);
         } catch (ArrayIndexOutOfBoundsException | IOException e) {
-            Ui.printError(e.getMessage());
+            ui.printError(e.getMessage());
         } catch (Exception e) {
-            Ui.printError("unexpectedly..." + e.getMessage());
+            ui.printError("unexpectedly..." + e.getMessage());
         }
     }
 }

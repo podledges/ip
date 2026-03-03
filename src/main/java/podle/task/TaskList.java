@@ -14,7 +14,7 @@ public class TaskList {
     private static int taskAmount;
     private static ArrayList<Task> taskList;
 
-    public TaskList(){  //Constructor
+    public TaskList(){
         this.taskList = new ArrayList<>();
         this.taskAmount = 0;
     }
@@ -32,45 +32,43 @@ public class TaskList {
         Ui.printLine();
     }
 
-    public static void markList(int inputNumber, boolean shouldMark) throws IOException {
+    public static void markList(int inputNumber, boolean shouldMark, boolean shouldPrint) throws IOException {
         if ((inputNumber > taskList.size()) || inputNumber <= 0) {
             throw new InvalidInputException(String.format("Podles is sad because the task index: %d ", inputNumber +
                             "is out of range, try an index that is 1 <= <input> <= %d ", inputNumber));
         }
         int taskListIndex = inputNumber -1;
         if (shouldMark) {
-            taskList.get(taskListIndex).markDone();
+            taskList.get(taskListIndex).markDone(shouldPrint);
         }
         else {
-            taskList.get(taskListIndex).markNotDone();
+            taskList.get(taskListIndex).markNotDone(shouldPrint);
         }
-        markStorageList(inputNumber,shouldMark);
-        listTask();
+        if (shouldPrint) {
+            listTask();
+        }
     }
 
-    public static void addTask(Task newTask, Boolean shouldPrint){
+    public void addTask(Task newTask, Boolean shouldPrint){
         taskList.add(newTask) ;
-        taskAmount++;
         if(shouldPrint) {
             Ui.printLine();
             Ui.printMessage(String.format("Podles has added: %n   %s", newTask.toString() +
-                    "%n" + "now you have %d tasks in the list.", taskList.size()));
+                    String.format(" %n now you have %d tasks left in the list.", taskList.size())));
             Ui.printLine();
         }
     }
 
-    public static void deleteTask(String index) throws IOException {
-        int inputNumber = Integer.parseInt(index);
-        if ((inputNumber > taskAmount) || inputNumber <= 0) {
-            throw new InvalidInputException(String.format("Podles sincerely regrets to inform you, that %d", inputNumber +
-                            "seems to be out of range, try an index that is 1 <= <input> <= %d", inputNumber));
+    public static void deleteTask(int index) throws IOException {
+        if ((index > taskList.size()) || index <= 0) {
+            throw new InvalidInputException(String.format("Podles sincerely regrets to inform you, that %d", index) +
+                            String.format("seems to be out of range, try an index that is 1 <= <input> <= %d", index));
         }
-        int taskListIndex = inputNumber -1;
+        int taskListIndex = index -1;
         Ui.printLine();
         Ui.printMessage("Podles has removed the task below from the list!!!!");
         Ui.printMessage(taskString(taskListIndex));
         taskList.remove(taskListIndex);
-        Storage.deleteLine(inputNumber);
         System.out.println("You have " + taskList.size() + " remaining tasks in the list!!" );
         Ui.printLine();
     }

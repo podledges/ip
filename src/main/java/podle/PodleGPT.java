@@ -1,5 +1,7 @@
 package podle;
 
+import podle.command.Command;
+import podle.parser.Parser;
 import podle.storage.Storage;
 import podle.task.TaskList;
 
@@ -14,35 +16,35 @@ public class PodleGPT {
     private Ui ui;
     private Storage storage;
 
-    public PodleGPT(){
+    public PodleGPT(Path filepath){
         this.ui = new Ui();
         this.tasks = new TaskList();
-        this.storage = new Storage(Path.of("./data/podle.txt"));
+        this.storage = new Storage(filepath);
     }
 
     public void boot() throws InterruptedException, IOException {
         ui.printGreeting();
-        storage.initializeStorage();
-        boolean isExit = false;
-        while (!isExit) {
+        storage.initializeStorage(tasks);
+        while (!Command.isExit()) {
             try {
-                String input = ui.getInput();
-             //   ExecuteCommand command = Parser.parse(input);
-            //    command.execute(tasks, ui);
-           //     isExit = command.isExit();
+                String inputCmd = ui.getInput();
+                ui.printLine();
+                Command cmd = Parser.parse(inputCmd);
+                cmd.execute(tasks, ui, storage);
             } catch (Exception e) {
                 ui.printError(e.getMessage());
+            } finally {
+                ui.printLine();
             }
         }
         exit();
     }
 
-
     private void exit(){
         System.exit(0);
     }
     public static void main(String[] args) throws InterruptedException, IOException {
-        PodleGPT podleGPT = new PodleGPT();
+        PodleGPT podleGPT = new PodleGPT(Path.of("./data/podle.txt"));
         podleGPT.boot();
     }
 }
