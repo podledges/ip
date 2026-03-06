@@ -119,7 +119,7 @@ Saves your data and safely exits the application. <br>
 * **Format:** `bye` **or** `byebye` <br>
   <br>
   **Output of bye** 
-  ``` text
+  ``` 
   Y dont u want to play with podles .·°՞(っ-ᯅ-ς)՞°·. SADGE
   ████ 22%
   ███████ 43.3893%
