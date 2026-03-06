@@ -45,6 +45,9 @@ public class PodleGPT {
                 String inputCmd = ui.getInput();
                 Command cmd = Parser.parse(inputCmd);
                 cmd.execute(tasks, ui, storage);
+                if(cmd.isExit()) {
+                    isRunning = false;
+                }
             } catch (Exception e) {
                 ui.printError(e.getMessage());
             }
