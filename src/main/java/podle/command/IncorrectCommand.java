@@ -15,6 +15,14 @@ public class IncorrectCommand extends Command {
         this.errorMessage = errorMessage;
     }
 
+    /**
+     * Executes the command by printing a standardized error message to the user.
+     *
+     * @param tasks The active task list.
+     * @param ui The user interface.
+     * @param storage The storage handler.
+     * @throws InterruptedException If the execution is interrupted.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.printError(errorMessage);

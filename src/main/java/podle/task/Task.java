@@ -41,10 +41,10 @@ public abstract class Task {
      *
      * @param shouldPrint True to print a confirmation message to the UI, false otherwise.
      */
-    public void markDone(boolean shouldPrint){
+    public void markDone(boolean shouldPrint) {
         isDone = true;
         if (shouldPrint) {
-            printMarkedMessage();
+            Ui.printMarkedMessage();
         }
     }
 

@@ -4,12 +4,13 @@ import podle.exception.InvalidInputException;
 import podle.storage.Storage;
 import podle.task.Deadline;
 import podle.task.TaskList;
-import podle.task.ToDo;
 import podle.ui.Ui;
-
 import java.io.IOException;
 
-public class DeadlineCommand extends Command{
+/**
+ * Represents a command to add a deadline task. Upon execution, creates the deadline and saves it to the list and storage.
+ */
+public class DeadlineCommand extends Command {
 
     private final String[] deadlineString;
     private final boolean shouldPrint;
@@ -19,6 +20,14 @@ public class DeadlineCommand extends Command{
         this.shouldPrint = shouldPrint;
     }
 
+    /**
+     * Executes the command by creating the deadline task and appending it to the local storage.
+     *
+     * @param tasks The active task list.
+     * @param ui The user interface.
+     * @param storage The storage handler.
+     * @throws Exception If an error occurs during execution.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         try {

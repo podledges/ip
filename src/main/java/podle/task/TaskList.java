@@ -52,11 +52,13 @@ public class TaskList {
      * @param description The search term that was used to find these tasks.
      */
     public void listRelevantTasks(ArrayList<Integer> resultList, String description){
+        ui.printLine();
         ui.printPodlesWill("Search for");
         ui.printMessage(description);
         for (int i : resultList){
-            ui.printMessage(taskString(resultList.get(i)));
+            ui.printMessage(taskString(i));
         }
+        ui.printLine();
     }
 
     /**
@@ -85,6 +87,7 @@ public class TaskList {
         }
     }
 
+
     /**
      * Searches the task list for tasks containing the specified keyword and prints them.
      *
@@ -99,9 +102,8 @@ public class TaskList {
             }
             else if (task.hasSearchTerm(description)) {
                 searchResults.add(i);
-                i++;
             }
-
+           i++;
         }
 
         listRelevantTasks(searchResults, description);

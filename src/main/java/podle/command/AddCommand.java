@@ -6,6 +6,9 @@ import podle.task.TaskList;
 import podle.task.ToDo;
 import podle.ui.Ui;
 
+/**
+ * Represents a command to add a standard to-do task. Upon execution, creates the to-do task and saves it to the list and storage.
+ */
 public class AddCommand extends Command {
 
     private final String taskString;
@@ -16,6 +19,14 @@ public class AddCommand extends Command {
         this.shouldPrint = shouldPrint;
     }
 
+    /**
+     * Executes the command by creating the to-do task and appending it to the local storage.
+     *
+     * @param tasks The active task list.
+     * @param ui The user interface.
+     * @param storage The storage handler.
+     * @throws Exception If an error occurs during execution.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         try {

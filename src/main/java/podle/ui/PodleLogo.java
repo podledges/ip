@@ -1,5 +1,9 @@
 package podle.ui;
 
+/**
+ * Represents the ASCII art logo for podleGPT. Stores the massive Podles visual as a constant string.
+ *
+ */
 public class PodleLogo {                // ASCII ART created using
     public static final String LOGO =   "                                                                                                               	  \n"
             + "                                .++-+.     .    .     .   .     .   ..   ...-:.:.                              \n"
