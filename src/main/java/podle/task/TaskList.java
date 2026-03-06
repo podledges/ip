@@ -32,6 +32,14 @@ public class TaskList {
         Ui.printLine();
     }
 
+    public static void listRelevantTasks(ArrayList<Integer> resultList, String description){
+        Ui.podlesWill("Search for");
+        Ui.printMessage(description);
+        for (int i : resultList){
+            Ui.printMessage(taskString(resultList.get(i)));
+        }
+    }
+
     public static void markList(int inputNumber, boolean shouldMark, boolean shouldPrint) throws IOException {
         if ((inputNumber > taskList.size()) || inputNumber <= 0) {
             throw new InvalidInputException(String.format("Podles is sad because the task index: %d ", inputNumber +
@@ -48,6 +56,28 @@ public class TaskList {
             listTask();
         }
     }
+
+    public void searchList(String description){
+       ArrayList<Integer> searchResults = new ArrayList<>();;
+       int i = 0;
+       for (Task task : taskList) {
+            if (task == null || taskList.isEmpty()) {
+                continue;
+            }
+            else if (task.hasSearchTerm(description)) {
+                searchResults.add(i);
+                i++;
+            }
+
+        }
+
+        listRelevantTasks(searchResults, description);
+
+
+
+        }
+
+
 
     public void addTask(Task newTask, Boolean shouldPrint){
         taskList.add(newTask) ;

@@ -21,6 +21,10 @@ public abstract class Task {
         return this.isDone;
     }
 
+    public boolean hasSearchTerm(String searchTerm){
+        return (taskName.toLowerCase().contains(searchTerm.toLowerCase()));
+    };
+
     public void markDone(boolean shouldPrint){
         isDone = true;
         if (shouldPrint) {
@@ -37,7 +41,6 @@ public abstract class Task {
 
 
     public abstract String toFileFormat();
-
 
 
     public String extractDay(String input) {
