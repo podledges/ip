@@ -9,7 +9,7 @@ import podle.ui.Ui;
 public class AddCommand extends Command {
 
     private final String taskString;
-    private final Boolean shouldPrint;
+    private final boolean shouldPrint;
 
     public AddCommand(String taskString, Boolean shouldPrint) {
         this.taskString = taskString;

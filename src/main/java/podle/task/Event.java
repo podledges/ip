@@ -1,9 +1,9 @@
 package podle.task;
 
-public class Events extends Task {
-    private String eventStart;
-    private String eventEnd;
-    public Events(String[] eventString) {
+public class Event extends Task {
+    private final String eventStart;
+    private final String eventEnd;
+    public Event(String[] eventString) {
         super(eventString[0]);
         this.eventStart = eventString[1];
         this.eventEnd = eventString[2];
@@ -11,11 +11,11 @@ public class Events extends Task {
 
     @Override
     public String toString() {
-        if(isDone){
-            return String.format("[E][X] " + this.taskName + String.format("(from: %s : %s)", this.eventStart, this.eventEnd));
+        if (isDone) {
+            return "[E][X] " + this.taskName + String.format("(From: %s To: %s)", this.eventStart, this.eventEnd);
         }
         else {
-            return String.format("[E][ ] " + this.taskName + String.format("(from: %s : %s)", this.eventStart, this.eventEnd));
+            return "[E][ ] " + this.taskName + String.format("(From: %s To: %s)", this.eventStart, this.eventEnd);
         }
     }
 
@@ -25,13 +25,10 @@ public class Events extends Task {
         return String.format("E | %d | %s | %s-%s%n",status, this.taskName, this.eventStart, this.eventEnd);
     }
 
-
-
-
-    public static Events fromFileFormat(String[] parts) {
+    public static Event fromFileFormat(String[] parts) {
         String[] times = parts[3].split("[-/]");
         String[] data = {parts[2].trim(), times[0].trim(), times[1].trim()};
-        return new Events(data);
+        return new Event(data);
     }
 
 }

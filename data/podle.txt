@@ -1,4 +1,5 @@
 T | 1 | podle
 T | 0 | podles
 E | 0 | podledging  | sunday -tuesday
-D | 0 | podledges  | by 5pm
+D | 1 | podledges  | by 5pm
+E | 0 | aubdate  | nowge to -tomorrowge

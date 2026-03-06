@@ -19,7 +19,7 @@ public class DeleteCommand extends Command {
         int inputNumber = Integer.parseInt(arguments);
         try {
             tasks.deleteTask(inputNumber);
-            Storage.deleteLine(inputNumber);
+            storage.deleteLine(inputNumber);
         } catch (InvalidInputException e) {
             ui.printError(e.getMessage());
         }

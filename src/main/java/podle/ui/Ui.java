@@ -1,5 +1,4 @@
 package podle.ui;
-import podle.ui.PodleLogo;
 
 import java.util.Scanner;
 
@@ -15,34 +14,36 @@ public class Ui {
     public String getInput() {
         return input.nextLine();
     }
-    public  void printGreeting() {
-        System.out.println(PodleLogo.logo);
+    public void printGreeting() {
+        System.out.println(PodleLogo.LOGO);
         System.out.println("HELLO! I am Podles! made by Podles!");  // print greeting
         System.out.println("What SHALL Podles do for you?! ( •◡-)-♡");
     }
 
-    public static void printError(String e) {
-        System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e + "%n Try again!"));
+    public void printError(String e) {
+        System.out.println("PODLError ( ˶°ㅁ°) !! : " + e + "%n Try again!");
     }
 
-    public static void printMessage(String s){
+    public void printMessage(String s) {
         System.out.println(s);
     }
 
-    public static void podlesWill(String input){
+    public void printPodlesWill(String input){
         System.out.println("Podles will " + input + ":");
     }
 
-    public static void printLine(){
+    public void printLine() {
         System.out.println("____________________________________________________________");
     }
 
-    public static void printMarkedMessage(){
+    public void printMarkedMessage() {
         System.out.println("what an AMAZING job!!" + "❀.(*´◡`*)❀" + "       MARKED!!");
     }
-    public static void printUnmarkedMessage(){
+
+    public static void printUnmarkedMessage() {
         System.out.println("OOOPS   " + "(｡•́︿•̀｡)" + "        how did that get marked...");
     }
+
     public void printByeBye(){
         System.out.println("deadge");
     }

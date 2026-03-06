@@ -1,17 +1,17 @@
 package podle.task;
 
-public class Deadlines extends Task{
+public class Deadline extends Task{
 
-    private String by;
+    private final String by;
 
-    public Deadlines(String[] deadlineString) {
+    public Deadline(String[] deadlineString) {
         super(deadlineString[0]);
         this.by = extractDay(deadlineString[1]);
     }
 
     @Override
     public String toString() {
-        if(isDone){
+        if (isDone) {
             return String.format("[D][X] " + this.taskName + String.format("(do by: %s)", this.by));
         }
         else {
@@ -19,12 +19,10 @@ public class Deadlines extends Task{
         }
     }
 
-    public static Deadlines fromFileFormat(String[] parts) {    // parts[0] is 'D', parts[1] is status, parts[2] is description, parts[3] is 'by'
+    public static Deadline fromFileFormat(String[] parts) {    // parts[0] is 'D', parts[1] is status, parts[2] is description, parts[3] is 'by'
         String[] data = {parts[2].trim(), parts[3].trim()};
-        return new Deadlines(data);
+        return new Deadline(data);
     }
-
-
 
     @Override
     public String toFileFormat() {

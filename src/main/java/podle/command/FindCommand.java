@@ -15,4 +15,4 @@ public class FindCommand extends Command {
         tasks.searchList(searchedString);
     }
 
-    }
+}

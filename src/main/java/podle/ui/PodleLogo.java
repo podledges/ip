@@ -1,7 +1,7 @@
 package podle.ui;
 
 public class PodleLogo {                // ASCII ART created using
-    public static final String logo =   "                                                                                                               	  \n"
+    public static final String LOGO =   "                                                                                                               	  \n"
             + "                                .++-+.     .    .     .   .     .   ..   ...-:.:.                              \n"
             + "                             .*-:..     ..                      .             ..-:                             \n"
             + "                         =++-.   .  .:  .  ..  .   ....  .#=-.  =..-.. .   ......-+=+-                         \n"

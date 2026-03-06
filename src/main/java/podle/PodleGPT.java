@@ -16,16 +16,19 @@ public class PodleGPT {
     private Ui ui;
     private Storage storage;
 
-    public PodleGPT(Path filepath){
+    public PodleGPT(Path filepath) {
         this.ui = new Ui();
-        this.tasks = new TaskList();
+        this.tasks = new TaskList(this.ui);
         this.storage = new Storage(filepath);
     }
 
     public void boot() throws InterruptedException, IOException {
         ui.printGreeting();
         storage.initializeStorage(tasks);
-        while (!Command.isExit()) {
+
+        boolean isRunning = true;
+
+        while (isRunning) {
             try {
                 String inputCmd = ui.getInput();
                 ui.printLine();
@@ -43,6 +46,7 @@ public class PodleGPT {
     private void exit(){
         System.exit(0);
     }
+
     public static void main(String[] args) throws InterruptedException, IOException {
         PodleGPT podleGPT = new PodleGPT(Path.of("./data/podle.txt"));
         podleGPT.boot();

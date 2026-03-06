@@ -5,7 +5,6 @@ import podle.task.TaskList;
 import podle.ui.Ui;
 import java.util.List;
 
-import static podle.storage.Storage.markStorageList;
 
 public class MarkCommand extends Command {
 
@@ -25,7 +24,7 @@ public class MarkCommand extends Command {
         for (int index : userInputIndexes) {
             try {
                 tasks.markList(index, shouldMark, shouldPrint);
-                markStorageList(index,shouldMark);
+                storage.markStorageList(index, shouldMark);
             } catch (InvalidInputException e) {
                 ui.printError(e.getMessage());
             }

@@ -5,11 +5,11 @@ import podle.ui.Ui;
 import podle.storage.Storage;
 
 public abstract class Command {
-    public static boolean isExit = false;
+    protected boolean isExit = false;
 
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws Exception;
 
-    public static boolean isExit() {
+    public boolean isExit() {
         return isExit;
     }
 }

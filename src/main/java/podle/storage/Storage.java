@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static java.nio.file.Files.*;
@@ -13,7 +12,7 @@ import static java.nio.file.Files.readAllLines;
 
 public class Storage {
 
-    private static Path filePath;
+    private Path filePath;
 
     public Storage(Path filePath) {
         this.filePath = filePath;
@@ -25,10 +24,10 @@ public class Storage {
         fw.close();
     }
 
-    public static void markStorageList(int taskIndex, boolean shouldMark)throws IOException{
+    public void markStorageList(int taskIndex, boolean shouldMark) throws IOException {
         List<String> lines = readAllLines(filePath);
         int lineIndex = taskIndex -1;
-        if(lineIndex >= 0 && lineIndex < lines.size()){
+        if (lineIndex >= 0 && lineIndex < lines.size()) {
             String line = lines.get(lineIndex);
             String[] splitLine = line.split("[|]");
             if (shouldMark) {
@@ -45,7 +44,7 @@ public class Storage {
 
 
 
-    public static void deleteLine(int taskIndex) throws IOException{
+    public void deleteLine(int taskIndex) throws IOException {
         List<String> lines = Files.readAllLines(filePath);
         int internalIndex = taskIndex - 1;
         if (internalIndex >= 0 && internalIndex < lines.size()) {
@@ -61,7 +60,7 @@ public class Storage {
         List<String> lines = readAllLines(filePath);
         for (String line : lines) {
             if (line == null || line.trim().isEmpty()) {
-                    continue;
+                continue;
             }
             String[] parts = splitLine(line);
             String category = removeWhiteSpaces(parts[0]);
@@ -74,10 +73,10 @@ public class Storage {
                     newTask = new ToDo(parts[2].trim());
                     break;
                 case "D":
-                    newTask = Deadlines.fromFileFormat(parts);
+                    newTask = Deadline.fromFileFormat(parts);
                     break;
                 case "E":
-                    newTask = Events.fromFileFormat(parts);
+                    newTask = Event.fromFileFormat(parts);
                     break;
                 default:
                     System.out.println("Unknown and unfriendly category detected ERROR" + category);
@@ -89,40 +88,39 @@ public class Storage {
                     newTask.markDone(shouldPrint);
                 }
                 tasks.addTask(newTask, shouldPrint);
-                }
             }
         }
+    }
 
-    public static String removeWhiteSpaces(String s){
+    public String removeWhiteSpaces(String s){
         return s.replaceAll("\\s+", "");
     }
 
-    public static String[] splitLine(String line)
-    {
+    public String[] splitLine(String line) {
         return line.split("[|]");
     }
 
-    public static boolean shouldMark(String status){
+    public boolean shouldMark(String status) {
         String temp = removeWhiteSpaces(status);
         return temp.equals("1");
     }
 
 
     public void initializeStorage(TaskList tasks) throws IOException {
-        if (doesFileExist()){
+        if (doesFileExist()) {
             readFromFile(tasks);
         }
-        else{
+        else {
             createNewFile();
         }
     }
 
-    public static boolean doesFileExist(){
+    public boolean doesFileExist() {
        return exists(filePath);
     }
 
-    public static void createNewFile(){
-        try{
+    public void createNewFile() {
+        try {
             Path parentDir = filePath.getParent();
             if (parentDir != null && Files.notExists(parentDir)) {
                 Files.createDirectories(parentDir);
@@ -131,7 +129,6 @@ public class Storage {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }

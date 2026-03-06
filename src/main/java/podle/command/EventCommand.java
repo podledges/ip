@@ -1,7 +1,7 @@
 package podle.command;
 
 import podle.storage.Storage;
-import podle.task.Events;
+import podle.task.Event;
 import podle.task.TaskList;
 import podle.ui.Ui;
 
@@ -19,7 +19,7 @@ public class EventCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws Exception {
         try {
-            Events event = new Events(eventString);
+            Event event = new Event(eventString);
             tasks.addTask(event, shouldPrint);
             storage.appendToFile(event);
         } catch (ArrayIndexOutOfBoundsException | IOException e) {
