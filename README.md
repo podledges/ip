@@ -116,10 +116,10 @@ Saves your data and safely exits the application. <br>
 
 * `bye` triggers a longer exit sequence, while `byebye` triggers a quick exit
 <br>
-* **Format:** `bye` **or** `byebye` <br>
-  <br>
-  **Output of bye** 
-  ``` 
+* **Format:** `bye` **or** `byebye` 
+
+**Output of bye** 
+  ``` text
   Y dont u want to play with podles .·°՞(っ-ᯅ-ς)՞°·. SADGE
   ████ 22%
   ███████ 43.3893%
@@ -128,7 +128,7 @@ Saves your data and safely exits the application. <br>
   █████████████████████]99%
   podles was terminated...    (╥﹏╥)```\
   ```
-  **Output of byebye**
+**Output of byebye**
   ``` text
   deadge
   ```
