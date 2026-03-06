@@ -1,8 +1,5 @@
-T | 0 | podle
-T | 1 | podles
-D | 1 | podledges  | by 5pm
-E | 0 | aubdate  | nowge to -tomorrowge
-T | 1 | Finish testing Podles
-D | 0 | Submit project  | Friday
-E | 0 | Team meeting  |  Monday - Tuesday
-T | 0 | podledging edged
+T | 1 | feed podles some good food
+D | 1 | buy podles more food  | Friday
+T | 0 | pet my sweet dog
+T | 0 | get podles a friend
+E | 0 | walk podles  | monday 2pm -3pm

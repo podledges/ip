@@ -40,7 +40,9 @@ public class Ui {
      * @param e The specific error message to display.
      */
     public void printError(String e) {
-        System.out.println("PODLError ( ˶°ㅁ°) !! : " + e + "%n Try again!");
+        printLine();
+        System.out.println(String.format("PODLError ( ˶°ㅁ°) !! : " + e + "%n" + "Try again!"));
+        printLine();
     }
 
     /**

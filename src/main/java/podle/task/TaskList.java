@@ -72,8 +72,8 @@ public class TaskList {
      */
     public void markList(int inputNumber, boolean shouldMark, boolean shouldPrint) throws IOException {
         if ((inputNumber > taskList.size()) || inputNumber <= 0) {
-            throw new InvalidInputException(String.format("Podles is sad because the task index: %d ", inputNumber +
-                            "is out of range, try an index that is 1 <= <input> <= %d ", inputNumber));
+            throw new InvalidInputException(String.format("Podles is sad because the task index: %d %n", inputNumber) +
+                            "is out of range, view valid indexes using: list");
         }
         int taskListIndex = inputNumber -1;
         if (shouldMark) {
@@ -120,8 +120,8 @@ public class TaskList {
         taskList.add(newTask);
         if (shouldPrint) {
             ui.printLine();
-            ui.printMessage(String.format("Podles has added: %n   %s", newTask.toString() +
-                    String.format(" %n now you have %d tasks left in the list.", taskList.size())));
+            ui.printMessage(String.format("Podles has added: %n   %s", newTask.toString()) +
+                    String.format("%n" + "now you have %d tasks left in the list.", taskList.size()));
             ui.printLine();
         }
     }
@@ -135,8 +135,8 @@ public class TaskList {
      */
     public void deleteTask(int index) throws IOException {
         if ((index > taskList.size()) || index <= 0) {
-            throw new InvalidInputException(String.format("Podles sincerely regrets to inform you, that %d", index) +
-                            String.format("seems to be out of range, try an index that is 1 <= <input> <= %d", index));
+            throw new InvalidInputException(String.format("Podles sadge because, %d %n", index) +
+                            String.format("seems to be out of range, view deletable indexes using: list"));
         }
         int taskListIndex = index -1;
         ui.printLine();
